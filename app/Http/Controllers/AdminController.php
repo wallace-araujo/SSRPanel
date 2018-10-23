@@ -560,11 +560,11 @@ class AdminController extends Controller
                 $ssNode->status = intval($request->get('status', 1));
 
                 $ssNode->v2_alter_id = intval($request->get('v2_alter_id', 16));
-                $ssNode->v2_port = $request->get('v2_port', 32000);
+                $ssNode->v2_port = intval($request->get('v2_port', 32000));
                 $ssNode->v2_net = $request->get('v2_net', 'tcp');
                 $ssNode->v2_type = $request->get('v2_type', 'none');
-                $ssNode->v2_host = $request->get('v2_host', '');
-                $ssNode->v2_path = $request->get('v2_path', '');
+                $ssNode->v2_host = $request->get('v2_host') ? $request->get('v2_host') : '';
+                $ssNode->v2_path = $request->get('v2_path') ? $request->get('v2_path') : '';
                 $ssNode->v2_tls = intval($request->get('v2_tls', 0));
 
                 $ssNode->save();

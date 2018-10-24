@@ -45,10 +45,17 @@
                                         <i class="icon-directions font-green hide"></i>
                                         <span class="caption-subject font-blue bold"> {{trans('home.announcement')}} </span>
                                     </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <button type="button" class="btn btn-default btn-circle" data-toggle="collapse" data-target="#open">展开</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="portlet-body">
                                     <div class="tab-content">
-                                        {!!$notice->content!!}
+                                        <div id="open" class="collapse">
+                                             {!!$notice->content!!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -188,7 +195,7 @@
                                                                     <a class="btn btn-sm green btn-outline" data-toggle="modal" href="#txt_{{$node->id}}" > <i class="fa fa-reorder"></i> </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a class="btn btn-sm green btn-outline" data-toggle="modal" href="#link_{{$node->id}}"> @if($node->type == 1)<i class="fa fa-paper-plane"></i>@else<i class="fa">V2</i>@endif </a>
+                                                                    <a class="btn btn-sm green btn-outline" data-toggle="modal" href="#link_{{$node->id}}"> @if($node->type == 1) <i class="fa fa-paper-plane"></i> @else <i class="fa">V2</i> @endif </a>
                                                                 </li>
                                                                 <li>
                                                                     <a class="btn btn-sm green btn-outline" data-toggle="modal" href="#qrcode_{{$node->id}}"> <i class="fa fa-qrcode"></i> </a>

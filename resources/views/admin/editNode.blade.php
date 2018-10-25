@@ -269,12 +269,18 @@
                                                         </div>
                                                         <hr />
                                                         <div class="form-group">
-                                                            <label for="single" class="col-md-3 control-label">单端口</label>
+                                                            <label for="single" class="col-md-3 control-label">单端口{{$node->single}}</label>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="single" id="single">
-                                                                    <option value="0" {{!$node->single ? 'selected' : ''}}>关闭</option>
-                                                                    <option value="1" {{$node->single ? 'selected' : ''}}>启用</option>
-                                                                </select>
+                                                                <div class="mt-radio-inline">
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="single" value="1" {{$node->single ? 'checked' : ''}}> 启用
+                                                                        <span></span>
+                                                                    </label>
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="single" value="0" {{!$node->single ? 'checked' : ''}}> 关闭
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
                                                                 <span class="help-block"> 如果启用请配置服务端的<span style="color:red"> <a href="javascript:showTnc();">additional_ports</a> </span>信息 </span>
                                                             </div>
                                                         </div>
@@ -358,10 +364,10 @@
                                                             <label for="v2_net" class="col-md-3 control-label">传输协议</label>
                                                             <div class="col-md-8">
                                                                 <select class="form-control" name="v2_net" id="v2_net">
-                                                                    <option value="tcp" @if($node->v2_net == 'tcp') selected @endif>TCP</option>
-                                                                    <option value="kcp" @if($node->v2_net == 'kcp') selected @endif>mKCP</option>
-                                                                    <option value="ws" @if($node->v2_net == 'ws') selected @endif>WebSocket</option>
-                                                                    <option value="h2" @if($node->v2_net == 'h2') selected @endif>HTTP/2</option>
+                                                                    <?php $v2_type = ['tcp' => 'TCP', 'kcp' => 'mKCP', 'ws' => 'WebSocket', 'h2' => 'HTTP/2']; ?>
+                                                                    @foreach ($v2_type as $k => $v)
+                                                                        <option value="{{$k}}" @if($k == $node->v2_net) selected @endif>{{$v}}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -369,11 +375,10 @@
                                                             <label for="v2_type" class="col-md-3 control-label">伪装类型</label>
                                                             <div class="col-md-8">
                                                                 <select class="form-control" name="v2_type" id="v2_type">
-                                                                    <option value="none" @if($node->v2_type == 'none') selected @endif>无伪装</option>
-                                                                    <option value="http" @if($node->v2_type == 'http') selected @endif>HTTP数据流</option>
-                                                                    <option value="srtp" @if($node->v2_type == 'srtp') selected @endif>视频通话数据 (SRTP)</option>
-                                                                    <option value="utp" @if($node->v2_type == 'utp') selected @endif>BT下载数据 (uTP)</option>
-                                                                    <option value="wechat-video" @if($node->v2_type == 'wechat-video') selected @endif>微信视频通话</option>
+                                                                    <?php $v2_type = ['none' => '无伪装', 'http' => 'HTTP数据流', 'srtp' => '视频通话数据 (SRTP)', 'utp' => 'BT下载数据 (uTP)', 'wechat-video' => '微信视频通话']; ?>
+                                                                    @foreach ($v2_type as $k => $v)
+                                                                        <option value="{{$k}}" @if($k == $node->v2_type) selected @endif>{{$v}}</option>
+                                                                    @endforeach
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -403,6 +408,33 @@
                                                                         <span></span>
                                                                     </label>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                        <hr>
+                                                        <div class="form-group">
+                                                            <label for="v2_ss" class="col-md-3 control-label">SS协议</label>
+                                                            <div class="col-md-8">
+                                                                <div class="mt-radio-inline">
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="v2_ss" value="1" {{$node->v2_ss ? 'checked' : ''}}> 开启
+                                                                        <span></span>
+                                                                    </label>
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="v2_ss" value="0" {{!$node->v2_ss ? 'checked' : ''}}> 关闭
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group v2-ss-setting {{!$node->v2_ss ? 'hidden' : ''}}">
+                                                            <label for="v2_ss_method" class="col-md-3 control-label">加密方式</label>
+                                                            <div class="col-md-8">
+                                                                <select class="form-control" name="v2_ss_method" id="v2_ss_method">
+                                                                    <?php $ss_method = ['aes-256-cfb', 'aes-128-cfb', 'chacha20', 'chacha20-ietf', 'aes-256-gcm', 'aes-128-gcm', 'chacha20-poly1305']; ?>
+                                                                    @foreach ($ss_method as $method)
+                                                                        <option value="{{$method}}" @if($method == $node->v2_ss_method) selected @endif>{{$method}}</option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -465,7 +497,7 @@
             var is_subscribe = $("input:radio[name='is_subscribe']:checked").val();
             var ssh_port = $('#ssh_port').val();
             var compatible = $("input:radio[name='compatible']:checked").val();
-            var single = $('#single').val();
+            var single = $('input:radio[name="single"]:checked').val();
             var single_force = $('#single_force').val();
             var single_port = $('#single_port').val();
             var single_passwd = $('#single_passwd').val();
@@ -484,6 +516,8 @@
             var v2_host = $('#v2_host').val();
             var v2_path = $('#v2_path').val();
             var v2_tls = $("input:radio[name='v2_tls']:checked").val();
+            var v2_ss = $("input:radio[name='v2_ss']:checked").val();
+            var v2_ss_method = $('#v2_ss_method').val();
 
             $.ajax({
                 type: "POST",
@@ -529,7 +563,9 @@
                     v2_type: v2_type,
                     v2_host: v2_host,
                     v2_path: v2_path,
-                    v2_tls: v2_tls
+                    v2_tls: v2_tls,
+                    v2_ss: v2_ss,
+                    v2_ss_method: v2_ss_method
                 },
                 dataType: 'json',
                 success: function (ret) {
@@ -544,30 +580,19 @@
             return false;
         }
 
-        // 设置单端口多用户
-        $("#single").on('change', function() {
-            var single = parseInt($(this).val());
+        function update_ui() {
+            var single = parseInt($('input:radio[name="single"]:checked').val());
+            var service = parseInt($('input:radio[name="service"]:checked').val());
+            var ss = parseInt($('input:radio[name="v2_ss"]:checked').val());
+            $(".single-setting").toggleClass('hidden', !single);
+            $(".ssr-setting").toggleClass('hidden', service !== 1);
+            $(".v2ray-setting").toggleClass('hidden', service !== 2);
+            $(".v2-ss-setting").toggleClass('hidden', !ss);
+        }
 
-            if (single) {
-                $(".single-setting").removeClass('hidden');
-            } else {
-                $(".single-setting").removeClass('hidden');
-                $(".single-setting").addClass('hidden');
-            }
-        });
-
-        // 设置服务
-        $("input:radio[name='service']").on('change', function() {
-            var service = parseInt($(this).val());
-
-            if (service === 1) {
-                $(".ssr-setting").removeClass('hidden');
-                $(".v2ray-setting").addClass('hidden');
-            } else {
-                $(".ssr-setting").addClass('hidden');
-                $(".v2ray-setting").removeClass('hidden');
-            }
-        });
+        $('input:radio[name="single"]').on('change', update_ui);
+        $("input:radio[name='service']").on('change', update_ui);
+        $("input:radio[name='v2_ss']").on('change', update_ui);
 
         // 服务条款
         function showTnc() {

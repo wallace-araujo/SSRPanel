@@ -30,6 +30,14 @@ ALTER TABLE `ss_node`
 ALTER TABLE `ss_node`
 	ADD COLUMN `v2_tls` TINYINT(4) NOT NULL DEFAULT '0' COMMENT 'V2ray底层传输安全 0 未开启 1 开启' AFTER `v2_path`;
 
+-- SS协议开关
+ALTER TABLE `ss_node`
+	ADD COLUMN `v2_ss` TINYINT(4) NOT NULL DEFAULT '0' COMMENT 'V2raySS协议' AFTER `v2_tls`;
+
+-- SS协议加密方式
+ALTER TABLE `ss_node`
+	ADD COLUMN `v2_ss_method` VARCHAR(32) NOT NULL DEFAULT '' COMMENT 'V2raySS加密方式' AFTER `v2_ss`;
+
 -- 加入VmessId
 ALTER TABLE `user`
-	ADD COLUMN `vmess_id` varchar(64) NOT NULL DEFAULT '' COMMENT 'V2ray用户ID' AFTER `passwd`;
+	ADD COLUMN `vmess_id` VARCHAR(64) NOT NULL DEFAULT '' COMMENT 'V2ray用户ID' AFTER `passwd`;

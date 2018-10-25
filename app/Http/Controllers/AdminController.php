@@ -566,6 +566,8 @@ class AdminController extends Controller
                 $ssNode->v2_host = $request->get('v2_host') ? $request->get('v2_host') : '';
                 $ssNode->v2_path = $request->get('v2_path') ? $request->get('v2_path') : '';
                 $ssNode->v2_tls = intval($request->get('v2_tls', 0));
+                $ssNode->v2_ss = intval($request->get('v2_ss', 1));
+                $ssNode->v2_ss_method = $request->get('v2_ss_method');
 
                 $ssNode->save();
 
@@ -682,7 +684,9 @@ class AdminController extends Controller
                     'v2_type'         => $request->get('v2_type', 'none'),
                     'v2_host'         => $request->get('v2_host', ''),
                     'v2_path'         => $request->get('v2_path', ''),
-                    'v2_tls'          => intval($request->get('v2_tls', 0))
+                    'v2_tls'          => intval($request->get('v2_tls', 0)),
+                    'v2_ss'           => intval($request->get('v2_ss', 1)),
+                    'v2_ss_method'    => $request->get('v2_ss_method')
                 ];
 
                 SsNode::query()->where('id', $id)->update($data);

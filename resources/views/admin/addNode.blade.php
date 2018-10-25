@@ -23,8 +23,8 @@
                                         <strong>注意：</strong> 添加节点后自动生成的<code>ID</code>，即为该节点后端部署SSR(R)时<code>usermysql.json</code>中的<code>node_id</code>的值；更改服务器的SSH端口<a href="https://github.com/ssrpanel/SSRPanel/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A6%81%E6%AD%A2PING%E3%80%81%E6%94%B9SSH%E7%AB%AF%E5%8F%A3%E5%8F%B7" target="_blank">教程</a>；
                                     </div>
                                     <div class="row">
+                                        <!-- 基础信息 START -->
                                         <div class="col-md-6">
-                                            <!-- BEGIN SAMPLE FORM PORTLET-->
                                             <div class="portlet light bordered">
                                                 <div class="portlet-title">
                                                     <div class="caption">
@@ -181,8 +181,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- END SAMPLE FORM PORTLET-->
                                         </div>
+                                        <!-- 基础信息 END -->
+
+                                        <!-- 扩展信息 START -->
                                         <div class="col-md-6">
                                             <!-- BEGIN SAMPLE FORM PORTLET-->
                                             <div class="portlet light bordered">
@@ -208,7 +210,7 @@
                                                         </div>
                                                     </div>
                                                     <hr />
-                                                    <!-- SS/SSR 设置部分 -->
+                                                    <!-- SSR设置部分 START -->
                                                     <div class="ssr-setting">
                                                         <div class="form-group">
                                                             <label for="method" class="col-md-3 control-label">加密方式</label>
@@ -265,17 +267,22 @@
                                                                         <span></span>
                                                                     </label>
                                                                 </div>
-                                                                <span class="help-block"> 如果兼容请在服务端配置协议和混淆时加上<span style="color:red">_compatible</span> </span>
                                                             </div>
                                                         </div>
                                                         <hr />
                                                         <div class="form-group">
                                                             <label for="single" class="col-md-3 control-label">单端口</label>
                                                             <div class="col-md-8">
-                                                                <select class="form-control" name="single" id="single">
-                                                                    <option value="0" selected>关闭</option>
-                                                                    <option value="1">启用</option>
-                                                                </select>
+                                                                <div class="mt-radio-inline">
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="single" value="1"> 启用
+                                                                        <span></span>
+                                                                    </label>
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="single" value="0" checked> 关闭
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
                                                                 <span class="help-block"> 如果启用请配置服务端的<span style="color:red"> <a href="javascript:showTnc();">additional_ports</a> </span>信息 </span>
                                                             </div>
                                                         </div>
@@ -341,7 +348,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <!-- V2ray 设置部分 -->
+                                                    <!-- SSR设置部分 END -->
+                                                    <!-- V2ray 设置部分 START -->
                                                     <div class="v2ray-setting hidden">
                                                         <div class="form-group">
                                                             <label for="v2_alter_id" class="col-md-3 control-label">额外ID</label>
@@ -406,11 +414,42 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <hr>
+                                                        <div class="form-group">
+                                                            <label for="v2_ss" class="col-md-3 control-label">SS协议</label>
+                                                            <div class="col-md-8">
+                                                                <div class="mt-radio-inline">
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="v2_ss" value="1" checked> 开启
+                                                                        <span></span>
+                                                                    </label>
+                                                                    <label class="mt-radio">
+                                                                        <input type="radio" name="v2_ss" value="0"> 关闭
+                                                                        <span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group v2-ss-setting">
+                                                            <label for="v2_ss_method" class="col-md-3 control-label">加密方式</label>
+                                                            <div class="col-md-8">
+                                                                <select class="form-control" name="v2_ss_method" id="v2_ss_method">
+                                                                    <option value="aes-256-cfb" selected>aes-256-cfb</option>
+                                                                    <option value="aes-128-cfb">aes-128-cfb</option>
+                                                                    <option value="aes-256-gcm">aes-256-gcm</option>
+                                                                    <option value="aes-128-gcm">aes-128-gcm</option>
+                                                                    <option value="chacha20">chacha20</option>
+                                                                    <option value="chacha20-ietf">chacha20-ietf</option>
+                                                                    <option value="chacha20-poly1305">chacha20-poly1305</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <!-- V2ray 设置部分 END -->
                                                 </div>
                                             </div>
-                                            <!-- END SAMPLE FORM PORTLET-->
                                         </div>
+                                        <!-- 扩展信息 END -->
                                     </div>
                                 </div>
                                 <div class="form-actions">
@@ -463,8 +502,8 @@
             var monitor_url = $('#monitor_url').val();
             var is_subscribe = $("input:radio[name='is_subscribe']:checked").val();
             var ssh_port = $('#ssh_port').val();
-            var compatible = $("input:radio[name='compatible']:checked").val();
-            var single = $('#single').val();
+            var compatible = $('input:radio[name="compatible"]:checked').val();
+            var single = $('input:radio[name="single"]:checked').val();
             var single_force = $('#single_force').val();
             var single_port = $('#single_port').val();
             var single_passwd = $('#single_passwd').val();
@@ -483,6 +522,8 @@
             var v2_host = $('#v2_host').val();
             var v2_path = $('#v2_path').val();
             var v2_tls = $("input:radio[name='v2_tls']:checked").val();
+            var v2_ss = $("input:radio[name='v2_ss']:checked").val();
+            var v2_ss_method = $('#v2_ss_method').val();
 
             $.ajax({
                 type: "POST",
@@ -527,7 +568,9 @@
                     v2_type: v2_type,
                     v2_host: v2_host,
                     v2_path: v2_path,
-                    v2_tls: v2_tls
+                    v2_tls: v2_tls,
+                    v2_ss: v2_ss,
+                    v2_ss_method: v2_ss_method
                 },
                 dataType: 'json',
                 success: function (ret) {
@@ -542,30 +585,19 @@
             return false;
         }
 
-        // 设置单端口多用户
-        $("#single").on('change', function() {
-            var single = parseInt($(this).val());
+        function update_ui() {
+            var single = parseInt($('input:radio[name="single"]:checked').val());
+            var service = parseInt($('input:radio[name="service"]:checked').val());
+            var ss = parseInt($('input:radio[name="v2_ss"]:checked').val());
+            $(".single-setting").toggleClass('hidden', !single);
+            $(".ssr-setting").toggleClass('hidden', service !== 1);
+            $(".v2ray-setting").toggleClass('hidden', service !== 2);
+            $(".v2-ss-setting").toggleClass('hidden', !ss);
+        }
 
-            if (single) {
-                $(".single-setting").removeClass('hidden');
-            } else {
-                $(".single-setting").removeClass('hidden');
-                $(".single-setting").addClass('hidden');
-            }
-        });
-
-        // 设置服务
-        $("input:radio[name='service']").on('change', function() {
-            var service = parseInt($(this).val());
-
-            if (service === 1) {
-                $(".ssr-setting").removeClass('hidden');
-                $(".v2ray-setting").addClass('hidden');
-            } else {
-                $(".ssr-setting").addClass('hidden');
-                $(".v2ray-setting").removeClass('hidden');
-            }
-        });
+        $('input:radio[name="single"]').on('change', update_ui);
+        $("input:radio[name='service']").on('change', update_ui);
+        $("input:radio[name='v2_ss']").on('change', update_ui);
 
         // 服务条款
         function showTnc() {

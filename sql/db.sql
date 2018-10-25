@@ -65,6 +65,8 @@ CREATE TABLE `ss_node` (
   `v2_host` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'V2ray伪装的域名',
   `v2_path` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'V2ray WS/H2路径',
   `v2_tls` TINYINT(4) NOT NULL DEFAULT '0' COMMENT 'V2ray底层传输安全 0 未开启 1 开启',
+  `v2_ss` TINYINT(4) NOT NULL DEFAULT '0' COMMENT 'V2raySS协议',
+  `v2_ss_method` VARCHAR(32) NOT NULL DEFAULT '' COMMENT 'V2raySS加密方式',
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
